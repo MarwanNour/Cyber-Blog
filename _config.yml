@@ -23,9 +23,7 @@ title: Cyber Blog                         # the main title
 tagline: Cybersecurity related blogposts  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  I decided to write some reports
-  about interesting malware. The reports
-  will include IOCs and TTPs. 
+   Cybersecurity related blogposts
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://MarwanNour.github.io'
@@ -77,7 +75,7 @@ theme_mode:   # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: 
+avatar: assets/img/terminal-icon.png
 
 # boolean type, the global switch for ToC in posts.
 toc: true

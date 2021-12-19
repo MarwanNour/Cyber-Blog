@@ -12,5 +12,5 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 /* append your custom style below */
 
 #avatar{
-    visibility: hidden; // hide avatar 
+    // visibility: hidden; // hide avatar 
 }
