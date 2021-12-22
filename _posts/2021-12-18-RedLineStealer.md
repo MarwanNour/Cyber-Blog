@@ -5,22 +5,19 @@ categories: [Threat Intel, Stealer]
 tag: [malware, windows] 
 ---
 
-This is my first threat analysis report. I've picked the RedLine Stealer because it was gaining popularity in early 2020 and is still being widely spread in Dec 2021 (probably because of its continuous updates). There are already some articles about this malware and a decent amount of IOCs which I linked in the [References](#references). Nevertheless, I'll look at samples of this info stealer and try to figure out its behavior. In the end, I'll put some IOCs as well as a Yara rule.
+This is my first threat analysis report. I've picked the RedLine Stealer because it was gaining popularity in early 2020 and is still being widely spread in Dec 2021 (probably because of its continuous updates). There are already some articles about this malware and a decent amount of IOCs which I linked in the [References](#references).
+
+
+![RedLine Trend in any.run](../../assets/img/redline/redline-trend.jpg)
+_Figure 1: Redline Trend in any.run_
 
 ## Overview
 
 RedLine Stealer gathers browser credentials, cookies, system information, browser autocomplete information, crypto wallets, etc. from Windows machines. It's been sold using a subscription-based model making it a Malware-as-a-Service (MaaS).
 
-<figure align="center">
-<img src="https://socradar.io/wp-content/uploads/2021/09/redline-staller-official-telegram.png" style="width:50%" alt="RedLine stealer official telegram account">
-<figcaption> Figure 1: RedLine Stealer Official Telegram account.<br> <em>Source: SOCRadar</em>
-</figcaption>
-</figure>
 
-There was a leaked cracked version of this malware in 2020 sitting in a github repository (at least for now). The repository contains a `RedLine.MainPanel.exe.config` file, which is the config file of the stealer dashboard in XML format. We notice the following:
-- .NETFramework v4.6.2
-- Profile Settings (Attacker's settings): Login, Password, Server IP
-- Remote Client Settings (Victim's settings): Passwords, Cookies, FTP, Files, CreditCards, Autofills
+![RedLine Stealer Official Telegram account.](https://socradar.io/wp-content/uploads/2021/09/redline-staller-official-telegram.png){: width="50%"}
+_Figure 2: RedLine Stealer Official Telegram account (Source: SOCRadar)_
 
 ## Distribution
 
@@ -31,13 +28,22 @@ RedLine hides under different formats including:
 - Executable files
 - JavaScript 
 
-It can be sent through different channels: email attachements, discord, malicious ads, cracked games, etc.
+It can be sent through different channels: email attachements, discord, malicious ads, cracked games, etc. Knowing that a lot of people are staying at home during the pandemic, it is not surprising to see this malware being sent through email attachements. 
 The infostealer might also be used to drop other malware on the victim's machine.
 
 
 ## Behavior
 
-Looking at some samples in any.run, we see that it tries to grab the victim's browser and VPN data:
+There was a leaked cracked version of this malware in 2020 sitting in a github repository (at least for now). The repository contains a `RedLine.MainPanel.exe.config` file, which is the config file of the stealer dashboard in XML format. We notice the following:
+- .NETFramework v4.6.2
+- Profile Settings (Attacker's settings): Login, Password, Server IP
+- Remote Client Settings (Victim's settings): Passwords, Cookies, FTP, Files, CreditCards, Autofills
+
+Also there is a batch file with the command: `netsh advfirewall firewall add rule name="RLS" dir=in action=allow protocol=TCP localport=6677`.
+This adds a rule to the firewall that enables TCP connections on port 6677.
+  
+
+Looking at some samples in any.run, we see that it tries to grab the victim's browser and VPN client data:
 ```
 C:\Users\admin\AppData\Local\NordVPN
 C:\Users\admin\AppData\Local\Chromium\User Data\
@@ -51,6 +57,24 @@ C:\Users\admin\AppData\Local\Google\Chrome\User Data\Default\Cookies
 ...
 ```
 
+This infostealer's activities seem to vary a lot: In some cases RedLine is searching for specific programs on the victim's machine. I'm guessing there is a RedLine builder with features that can be enabled to fit the malware user. 
+
+Now what's troublesome (but expected) is that RedLine is obfuscated. A de-obfuscated version from the Blackberry Research & Intelligence Team presents several features of this infostealer including reading vpn configuration.
+
+![Reading username and password via NordVPN Config file](https://blogs.blackberry.com/content/dam/blogs-blackberry-com/images/blogs/2021/07/redline-fig05.png){: width="75%"}
+_Figure 3: Reading username and password via NordVPN Config file (Source: Blackberry)_
+
+It's also important to note that RedLine tries to steal Instant Messenger credentials like Discord and Telegram but also credentials related to FTP clients (FileZilla and WinSCP) and the Steam client.  
+
+![Parsing the Steam Sentry File (.SSFN) to read the users credentials / authorization data.](https://blogs.blackberry.com/content/dam/blogs-blackberry-com/images/blogs/2021/07/redline-fig08.png){: width="70%"}
+_Figure 4: Parsing the Steam Sentry File (.SSFN) to read the users credentials / authorization data (Source: Blackberry)_
+
+## Conclusion and MITRE ATT&CK Matrix
+
+RedLine is getting quite popular and is receiving more updates. The 2020 leaked version included fewer features than the samples I have encountered recently. Because of RedLine's varieties, people should be careful of the files they are downloading on the internet. Unfortunately, the pandemic is making it easier for threat actors to be successful in their phishing campaigns. For a price ranging from 150$ to 800$, they are likely to get a good return on investment especially if they stumble uppon cryptowallets.
+
+![RedLine MITRE ATT&CK Matrix](../../assets/img/redline/matrix.png)
+_Figure 5: RedLine MITRE ATT&CK Matrix_
 
 ## IOCs
 Hashes:
@@ -103,6 +127,10 @@ IP addresses:
 - 62.182.156.181
 - 185.255.134.22
 - 91.245.226.16
+- 45.9.20.52
+- 185.215.113.50
+
+
 
 Domains:
 - yabynennet.xyz
@@ -128,8 +156,10 @@ Domains:
 - majul.com
 - thuocnam.tk
 - www.intercourierdelivery.services
+- govvv.xyz
+- tatreriash.xyz
+- nariviqusir.xyz
 
-## Yara rule
 
 ## References
 
@@ -142,3 +172,5 @@ Domains:
 * https://threatfox.abuse.ch/browse/malware/win.redline_stealer/
 * https://github.com/rootpencariilmu/Redlinestealer2020 
 * https://blog.talosintelligence.com/2021/12/magnat-campaigns-use-malvertising-to.html
+* https://www.proofpoint.com/us/blog/threat-insight/new-redline-stealer-distributed-using-coronavirus-themed-email-campaign
+* https://blogs.blackberry.com/en/2021/07/threat-thursday-redline-infostealer
