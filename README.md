@@ -1,5 +1,8 @@
 # Cyber Blog
 
+Marwan Nour | marwan.nour@polytechnique.edu
+
+
 This repository consists of personal cybersecurity related blogposts that I have written in my free time. I'll do my best to add diagrams and code snippets to make things easier to understand and visualize. If you notice any issues/errors/mistakes, feel free to correct me through a github issue on this repository.
 
 Disclaimer: I am no expert. These articles might be incomplete and I might have made some mistakes in them. In case you find some errors, feel free to correct me through a github issue.
