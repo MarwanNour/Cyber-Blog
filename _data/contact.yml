@@ -10,10 +10,10 @@
 #   type: email
 #   icon: 'fas fa-envelope'
 #   noblank: true            # open link in current tab
-# -
-#   type: rss
-#   icon: 'fas fa-rss'
-#   noblank: true
+-
+  type: rss
+  icon: 'fas fa-rss'
+  noblank: true
 
 # Uncomment and complete the url below to enable more contact options
 # -
@@ -23,8 +23,8 @@
 -
   type: linkedin
   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
-  url:  'https://www.linkedin.com/in/marwan-nour-b1614512b/'                  # Fill with your Linkedin homepage
--
-  type: stack-overflow
-  icon: 'fab fa-stack-overflow'
-  url:  'https://stackoverflow.com/users/8178843/marwan-n'                  # Fill with your stackoverflow homepage
+  url:  'https://www.linkedin.com/in/marwannour/'                  # Fill with your Linkedin homepage
+# -
+#   type: stack-overflow
+#   icon: 'fab fa-stack-overflow'
+#   url:  'https://stackoverflow.com/users/8178843/marwan-n'                  # Fill with your stackoverflow homepage

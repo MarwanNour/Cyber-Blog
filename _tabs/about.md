@@ -10,4 +10,3 @@ This repository consists of personal cybersecurity related blogposts that I have
 Enjoy,
 
 Marwan Nour<br>
-MScT Cybersecurity, École Polytechnique
