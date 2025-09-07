@@ -129,19 +129,15 @@ _Figure 3: Message Box_
 You might have figured it out by now that we could have placed our DLL **anywhere** in the directories that we've seen in Process Monitor which include the ones in the `PATH` environment variable.  
 
 
-## Real-life example
-
-TODO: Get sample
 
 ## Mitigation
 
-TODO
+There are a few ways to avoid such attacks including the following:
+- Ensure DLL import paths are hardcorded / Avoid relative paths
+- Confirm that the imported DLL exists and that its function are valid
+- Use a WinSxS manifest 
+- Verify the DLL Signature
 
-## Conclusion 
-
-TODO
-
-Other DLL techniques (from hacktricks): TODO
 
 ## References
 
@@ -155,4 +151,4 @@ Other DLL techniques (from hacktricks): TODO
 - https://www.mandiant.com/resources/blog/abusing-dll-misconfigurations
 - https://posts.specterops.io/automating-dll-hijack-discovery-81c4295904b0
 - https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain
-- 
+- https://www.mandiant.com/sites/default/files/2021-09/rpt-dll-sideloading.pdf
